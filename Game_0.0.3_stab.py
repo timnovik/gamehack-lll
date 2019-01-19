@@ -1,24 +1,36 @@
 import random
-from tkinter import *
 from PIL import Image, ImageTk
 from menu_t import menu
 from map_ import make_map
+import pygame
 
-tk = Tk()
-c = Canvas(tk, width=1025, height=768, bg='white')
-c.pack()
-size = [26, 13]
+def keyPressed(inputKey):
+    keysPressed = pygame.key.get_pressed()
+    if keysPressed[inputKey]:
+        return True
+    else:
+        return False
+    
+    
+
+size = [26, 24]
 show_border = [80, 80]
 hero_place = [size[0] // 2, size[1] // 2]
 images = []
 field_width = 200
 map_ = make_map(field_width, show_border, hero_place)
 
-wall_img = ImageTk.PhotoImage(Image.open('images/wall.png').resize((40, 40)))
-field_img = ImageTk.PhotoImage(Image.open('images/grass5.jpg').resize((40, 40)))
-road_img = ImageTk.PhotoImage(Image.open('images/road1.png').resize((40, 40)))
-rock_img = ImageTk.PhotoImage(Image.open('images/rock.png').resize((40, 40)))
-hero1_img = ImageTk.PhotoImage(Image.open('images/Рыцарь.png').resize((40, 40)))
+
+
+
+
+
+
+wall_img = pygame.image.load('images/wall.png')#.resize((40, 40))
+field_img = pygame.image.load('images/grass5.jpg')#.resize((40, 40))
+road_img = pygame.image.load('images/road1.png')#.resize((40, 40))
+rock_img = pygame.image.load('images/rock.png')#.resize((40, 40))
+hero1_img = pygame.image.load('images/Рыцарь.png')#.resize((40, 40))
 heroes_img = [hero1_img]
 textures = [field_img, wall_img, rock_img, road_img]
 
@@ -51,11 +63,23 @@ def buttons(key):
                 show_border[0] += 1
             else:
                 hero_place[0] += 1
-
-
-def loop():
-    for img in images:
-        c.delete(img)
+window = pygame.display.set_mode((1050,768),0,0)
+# window = pygame.display.set_mode((900,1600),pygame.FULLSCREEN ,0)
+pygame.display.set_caption("towers and magic")
+screen = pygame.Surface((1050,768))
+pygame.init() 
+FPS = 15
+clock = pygame.time.Clock()
+while 1:
+    clock.tick(FPS)
+    bgColor = (0,0,0) 
+    screen.fill(bgColor) 
+    if  keyPressed(pygame.K_q):
+        break
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                break
+    pygame.mouse.set_visible(0)
     for t in range(show_border[1], show_border[1] + size[1]):
         for g in range(show_border[0], show_border[0] + size[0]):
             if map_[t][g] == 1.1:
@@ -68,11 +92,12 @@ def loop():
                     res = 1
                 map_[t][g] = res
             img = textures[map_[t][g]]
-            images.append(c.create_image((g - show_border[0]) * 40, (t - show_border[1]) * 40, image=img, anchor=NW))
-    images.append(c.create_image(hero_place[0] * 40, hero_place[1] * 40, image=hero_img, anchor=NW))
-    c.after(30, loop)
+            screen.blit(img,((g - show_border[0]) * 40, (t - show_border[1]) * 40))
+            
+    
+    screen.blit(hero_img,((g - show_border[0]) * 40, (t - show_border[1]) * 40))
+    pygame.display.update()
+    window.blit(screen,(0,0))
+         
 
-
-loop()
-tk.bind("<KeyPress>", buttons)
-mainloop()
+pygame.quit()
