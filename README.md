@@ -4,3 +4,4 @@
 ## Требования к ПО:
   1) Python >3
   2) Pygame >1.9
+  3) random, time
