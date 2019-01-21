@@ -3,6 +3,6 @@
 # Что cделать, чтобы поиграть?
  Скачать проект, разархивировать, запустить <code>TOWERS AND MAGIC.PY</code> и наслаждаться...
 ## Требования к ПО:
-  1) Python >3
-  2) Pygame >1.9
-  3) random, time
+  1) <code>Python >3</code>
+  2) <code>Pygame >1.9</code>
+  3) <code>random, time</code>
