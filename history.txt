@@ -1,0 +1,5 @@
+- you win, hp - 3
+- you lose
+- you win, hp - 3
+- you win, hp - 3
+- you lose
